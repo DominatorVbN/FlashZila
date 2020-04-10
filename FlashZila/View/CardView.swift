@@ -15,7 +15,7 @@ struct CardView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @State private var feedback = UINotificationFeedbackGenerator()
     let card: Card
-    var removal: (() -> Void)? = nil
+    var removal: ((_ wasRight: Bool) -> Void)? = nil
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 25, style: .continuous)
@@ -75,7 +75,7 @@ struct CardView: View {
                     } else {
                         self.feedback.notificationOccurred(.error)
                     }
-                    self.removal?()
+                    self.removal?(self.offset.width > 0)
                 } else {
                     self.offset = .zero
                 }
